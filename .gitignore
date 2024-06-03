@@ -1,0 +1,7 @@
+node_modules/
+ui-design
+dist/
+desain-ui
+.parcel-cache
+dist
+build

@@ -15,18 +15,22 @@ import PassAdmin from "./models/PassAdminModel.js";
 dotenv.config();
 const app = express();
 
-try {
-    await Database.authenticate();
-    console.log('Database Connected...');
-    await FaunaContentModel.sync();
-    await QuizModel.sync();
-    await UserModel.sync();
-    await ReviewerModel.sync();
-    await LeaderboardModel.sync();
-    await PassAdmin.sync();
-} catch (error) {
-    console.error(error);
+async function initializeDatabase() {
+    try {
+        await Database.authenticate();
+        console.log('Database Connected...');
+        await FaunaContentModel.sync();
+        await QuizModel.sync();
+        await UserModel.sync();
+        await ReviewerModel.sync();
+        await LeaderboardModel.sync();
+        await PassAdmin.sync();
+    } catch (error) {
+        console.error('Failed to initialize database:', error);
+    }
 }
+
+initializeDatabase();
 
 app.use(cors({ credentials: true, origin: 'http://localhost:1234' }));
 app.use(cookieParser());
